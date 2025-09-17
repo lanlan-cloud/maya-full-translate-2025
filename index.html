@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor Visual Maya - Portafolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4dc6ff;
+            --secondary: #0072ff;
+            --accent: #ff8c00;
+            --dark: #0f2027;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .app-frame {
+            position: fixed;
+            top: 23px;
+            left: 23px;
+            right: 23px;
+            bottom: 23px;
+            border: 3px solid rgba(255, 215, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 195, 0, 0.6);
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #ffd700;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .section {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 i {
+            color: #ff8c00;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 25px 0 15px 0;
+            color: #ff8c00;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .feature {
+            background: rgba(0, 20, 40, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #ff8c00;
+            transition: transform 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature i {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .pricing-tier {
+            background: rgba(0, 30, 60, 0.6);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .pricing-tier.freemium {
+            border-color: #ffd700;
+            transform: scale(1.05);
+        }
+        
+        .pricing-tier:hover {
+            transform: translateY(-5px);
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin: 15px 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: #ccc;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff8c00, #ff4500);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff8c00;
+            color: #ff8c00;
+        }
+        
+        .btn-outline:hover {
+            background: #ff8c00;
+            color: white;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .screenshot {
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot img {
+            width: 100%;
+            display: block;
+        }
+        
+        .mockup {
+            background: #2d4a5f;
+            height: 250px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mockup::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+        }
+        
+        .mockup-content {
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .mockup-content i {
+            font-size: 4rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            color: #ffd700;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .app-frame {
+                top: 15px;
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+                border-width: 2px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .features, .pricing {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-tier.freemium {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Marco de la aplicación -->
+    <div class="app-frame"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Traductor Visual Maya</h1>
+            <p class="subtitle">Aplicación que se superpone a otras ventanas para traducir contenido a lenguas mayas en tiempo real</p>
+            
+            <div class="badges">
+                <div class="badge"><i class="fas fa-code-branch"></i> JavaScript</div>
+                <div class="badge"><i class="fas fa-paint-brush"></i> HTML5/CSS3</div>
+                <div class="badge"><i class="fas fa-globe"></i> API de Traducción</div>
+                <div class="badge"><i class="fas fa-layer-group"></i> Superposición</div>
+            </div>
+        </header>
+        
+        <div class="section">
+            <h2><i class="fas fa-star"></i> Propuesta de Valor</h2>
+            <p>Traductor Visual Maya es una aplicación innovadora que se superpone a cualquier contenido en tu pantalla, detectando texto y traduciéndolo instantáneamente a lenguas mayas. Ideal para preservar y promover lenguas indígenas mediante tecnología accesible.</p>
+            
+            <div class="mockup">
+                <div class="mockup-content">
+                    <i class="fas fa-language"></i>
+                    <h3>Visualizador en Acción</h3>
+                    <p>Interfaz superpuesta traduciendo contenido</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-gem"></i> Características Principales</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-border-all"></i>
+                    <h3>Marco Superpuesto</h3>
+                    <p>Interfaz transparente que se posiciona sobre otras aplicaciones sin interferir con su funcionalidad.</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-eye"></i>
+                    <h3>Detección Visual</h3>
+                    <p>Reconoce texto en cualquier aplicación o página web usando tecnología OCR avanzada.</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Traducción en Tiempo Real</h3>
+                    <p>Convierte texto detectado a lenguas mayas al instante con alta precisión.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-crown"></i> Modelo Freemium</h2>
+            <p>Ofrecemos una versión gratuita con funcionalidades básicas y una versión premium con capacidades extendidas para usuarios avanzados.</p>
+            
+            <div class="pricing">
+                <div class="pricing-tier freemium">
+                    <h3>Plan Freemium</h3>
+                    <div class="price">Gratis</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Traducción de hasta 300 caracteres por vez</li>
+                        <li><i class="fas fa-check"></i> 5 traducciones por día</li>
+                        <li><i class="fas fa-check"></i> Soporte para 4 lenguas mayas</li>
+                        <li><i class="fas fa-check"></i> Interfaz básica</li>
+                        <li><i class="fas fa-times"></i> Sin soporte prioritario</li>
+                    </ul>
+                    <a href="#" class="btn">Usar Gratis</a>
+                </div>
+                
+                <div class="pricing-tier">
+                    <h3>Plan Premium</h3>
+                    <div class="price">$5 <span>/mes</span></div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Traducciones ilimitadas</li>
+                        <li><i class="fas fa-check"></i> Hasta 2000 caracteres por traducción</li>
+                        <li><i class="fas fa-check"></i> Soporte para 12 lenguas mayas</li>
+                        <li><i class="fas fa-check"></i> Interfaz avanzada personalizable</li>
+                        <li><i class="fas fa-check"></i> Soporte prioritario 24/7</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Prueba 7 días gratis</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-code"></i> Implementación Técnica</h2>
+            
+            <h3><i class="fas fa-cogs"></i> Tecnologías Utilizadas</h3>
+            <div class="tech-stack">
+                <div class="tech">JavaScript ES6+</div>
+                <div class="tech">HTML5 Canvas</div>
+                <div class="tech">CSS3</div>
+                <div class="tech">Tesseract.js (OCR)</div>
+                <div class="tech">Google Translate API</div>
+                <div class="tech">WebExtensions API</div>
+            </div>
+            
+            <h3><i class="fas fa-desktop"></i> Funcionamiento</h3>
+            <p>La aplicación utiliza la API de captura de pantalla para superponerse sobre otras ventanas. Mediante tecnología OCR, detecta texto en la pantalla y lo envía a los servicios de traducción, mostrando los resultados en una interfaz transparente no intrusiva.</p>
+            
+            <h3><i class="fas fa-download"></i> Instalación</h3>
+            <p>El proyecto está disponible como extensión de navegador para Chrome y Firefox. Próximamente estará disponible como aplicación desktop para Windows, MacOS y Linux.</p>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-hands-helping"></i> Contribución</h2>
+            <p>Este proyecto es de código abierto bajo licencia Apache 2.0. Invitamos a desarrolladores, lingüistas y entusiastas de la cultura maya a contribuir con su expertise.</p>
+            
+            <h3><i class="fas fa-code-branch"></i> Cómo Contribuir</h3>
+            <ul>
+                <li>Reportar bugs o sugerir características nuevas</li>
+                <li>Mejorar la precisión de las traducciones</li>
+                <li>Añadir soporte para más lenguas mayas</li>
+                <li>Crear documentación y tutoriales</li>
+                <li>Diseñar interfaces adicionales</li>
+            </ul>
+            
+            <a href="#" class="btn"><i class="fab fa-github"></i> Ver en GitHub</a>
+        </div>
+        
+        <div class="section">
+            <h2><i class="fas fa-road"></i> Roadmap</h2>
+            
+            <h3><i class="fas fa-check-circle"></i> Completado (2025)</h3>
+            <ul>
+                <li>Prototipo de detección de texto</li>
+                <li>Interfaz de superposición básica</li>
+                <li>Soporte para K'iche' y Kaqchikel</li>
+            </ul>
+            
+            <h3><i class="fas fa-spinner"></i> En Progreso (2025)</h3>
+            <ul>
+                <li>Integración con APIs de traducción</li>
+                <li>Versión extensión de navegador</li>
+                <li>Interfaz de usuario mejorada</li>
+            </ul>
+            
+            <h3><i class="fas fa-plane"></i> Próximamente (2026)</h3>
+            <ul>
+                <li>Aplicación desktop multiplataforma</li>
+                <li>Traducción de imágenes y PDF</li>
+                <li>Modo offline para traducciones básicas</li>
+                <li>API pública para desarrolladores</li>
+            </ul>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <h3>Traductor Visual Maya</h3>
+            <p>Preservando lenguas mayas mediante tecnología innovadora</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+            <p>© 2023 Traductor Visual Maya - Proyecto de código abierto bajo licencia Apache 2.0</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto de parpadeo sutil en el marco para hacerlo más visible
+        setInterval(() => {
+            const frame = document.querySelector('.app-frame');
+            frame.style.boxShadow = `0 0 ${25 + Math.random() * 5}px rgba(255, 195, 0, ${0.5 + Math.random() * 0.2})`;
+        }, 2000);
+        
+        // Animación para los elementos de características
+        document.addEventListener('DOMContentLoaded', function() {
+            const features = document.querySelectorAll('.feature');
+            features.forEach((feature, index) => {
+                feature.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
